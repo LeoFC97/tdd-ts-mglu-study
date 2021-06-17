@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+      "lib": ["ES2020"],
+      "module": "commonjs",
+      "target": "ES2019",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "baseUrl": ".",
+      "outDir": "dist",
+      "paths": {
+        "app/*": ["src/app/*"],
+        "api/*": ["src/api/*"],
+        "config/*": ["src/config/*"],
+        "drivers/*": ["src/drivers/*"],
+        "interfaces/*": ["src/interfaces/*"],
+        "entities/*": ["src/entities/*"],
+        "use-cases/*": ["src/use-cases/*"],
+      },
+      "resolveJsonModule": true,
+      "sourceMap": true,
+      "allowJs": true,
+      "typeRoots": ["src/@types", "node_modules/@types"],
+      "types": ["reflect-metadata","jest"],
+      "moduleResolution": "node",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
