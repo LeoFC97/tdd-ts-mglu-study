@@ -1,0 +1,31 @@
+name: continuosIntegration
+
+# Runs on master and PRs targeting master
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # Run Jest unit tests
+  test:
+    name: unitTests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          always-auth: true
+          node-version: 10.x
+          registry-url: https://registry.npmjs.org
+          scope: '@delivery-much'
+      - name: Install dependencies
+        run: npm i
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: Run tests
+        run: npm run test:ci
