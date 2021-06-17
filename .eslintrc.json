@@ -1,0 +1,48 @@
+{
+  "env": {
+    "node": true,
+    "es2020": true
+  },
+  "ignorePatterns": ["dist", "node_modules", "**/vendor/*.js"],
+  "plugins": [
+    "@typescript-eslint",
+    "promise"
+  ],
+  "extends": [
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:promise/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": [
+          "node_modules",
+          "src"
+        ]
+      },
+      "typescript": {}
+    }
+  },
+  "rules": {
+    "complexity": [
+      "error",
+      {
+        "max": 5
+      }
+    ],
+    "lines-between-class-members": "off",
+    "@typescript-eslint/lines-between-class-members": "off",
+    "class-methods-use-this": "off"
+  }
+}
