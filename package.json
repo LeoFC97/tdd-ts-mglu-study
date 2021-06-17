@@ -25,7 +25,9 @@
   "homepage": "https://github.com/LeoFC97/tdd-ts-mglu-study#readme",
   "dependencies": {
     "dotenv": "^10.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.5.0"
   },
   "devDependencies": {
     "@types/node": "^15.12.2",
