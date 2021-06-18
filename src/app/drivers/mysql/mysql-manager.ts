@@ -26,8 +26,13 @@ export default class MysqlDBManager {
     }
   }
   static async checkConnection(): Promise <boolean> {
-    const connecion = await getConnection().isConnected;
-    return connecion;
+    try {
+      const connecion = await getConnection().isConnected;
+      return connecion;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
   static async closeConnection(): Promise <boolean> {
     try {
