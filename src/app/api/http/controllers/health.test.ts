@@ -2,12 +2,11 @@
 import supertest from 'supertest';
 import startExpressServer from '../../../drivers/http/server';
 import MysqlDBManager from '../../../drivers/mysql/mysql-manager';
+import { mysql } from '../../../../config/enviroment';
 
 describe('Test health response', () => {
   beforeAll(async () => {
-    process.env.MYSQL_DATABASE = 'mockedDatabase';
-    process.env.MYSQL_HOST = '127.0.0.1';
-    process.env.MYSQL_PORT = '3306';
+    mysql.database = 'mockedDatabase';
     await MysqlDBManager.initialize();
   });
   afterAll(async () => {
