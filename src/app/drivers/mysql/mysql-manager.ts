@@ -7,7 +7,6 @@ import { mysql } from '../../../config/enviroment';
 export default class MysqlDBManager {
   static async initialize(): Promise <Connection> {
     try {
-      console.log(mysql);
       const connection = await createConnection({
         type: 'mysql',
         host: mysql.host,
