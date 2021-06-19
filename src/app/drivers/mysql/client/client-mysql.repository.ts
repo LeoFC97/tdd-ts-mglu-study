@@ -9,7 +9,7 @@ class ClientMySqlDBRepository implements ClientRepository {
     this.connectionManager = getConnectionManager();
   }
 
-  async getById(id: number): Promise<Client> {
+  async getClientById(id: number): Promise<Client> {
     const connection = this.connectionManager.get();
     const company = await connection
       .createQueryBuilder()
