@@ -21,7 +21,6 @@ export default class MysqlDBManager {
       console.log('Connected to Mysql Database');
       return connection;
     } catch ({ message }) {
-      console.log(message);
       return message;
     }
   }
@@ -30,7 +29,6 @@ export default class MysqlDBManager {
       const connecion = await getConnection().isConnected;
       return connecion;
     } catch (error) {
-      console.log(error);
       return false;
     }
   }
@@ -39,7 +37,6 @@ export default class MysqlDBManager {
       await getConnection().close;
       return true;
     } catch (error) {
-      console.log(error);
       return false;
     }
   }

@@ -4,10 +4,7 @@ import MysqlDBManager from '../../../drivers/mysql/mysql-manager';
 
 class HealthController implements Controller {
   async handle(): Promise<HttpResponse> {
-    console.log('mysqlDatabaseStatus');
-
     const mysqlDatabaseStatus = await MysqlDBManager.checkConnection();
-    console.log(mysqlDatabaseStatus);
     const httpResponse = {
       body: {
         datetime: new Date(),
@@ -15,7 +12,6 @@ class HealthController implements Controller {
       },
       status: mysqlDatabaseStatus ? 200 : 500,
     };
-    console.log(httpResponse);
     return httpResponse;
   }
 }
