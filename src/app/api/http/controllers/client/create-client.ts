@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 import isEmpty from 'is-empty';
 import Controller from '../../../../interfaces/http/controller';
-// import ValidationError from '../../../../errors/validation';
+import ValidationError from '../../../../errors/validation';
 import { HttpRequest, HttpResponse } from '../../../../interfaces/http/http';
 import CreateClientUseCase from '../../../../use-cases/client/create-client';
 
@@ -20,13 +20,13 @@ class CreateClientController implements Controller {
     const { body } = httpRequest;
 
     if (!(typeof body === 'object') || isEmpty(body)) {
-      // console.log('entrou aqui');
-      // const error = new ('bodyShouldNotBeEmpty');
-      // httpResponse = {
-      //   body: error,
-      //   status: 400,
-      // };
-      // return httpResponse;
+      console.log('entrou aqui');
+      const error = new ValidationError('bodyShouldNotBeEmpty');
+      httpResponse = {
+        body: error,
+        status: 400,
+      };
+      return httpResponse;
     }
 
     console.log(body);
