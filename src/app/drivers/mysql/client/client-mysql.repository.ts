@@ -1,4 +1,4 @@
-import { getConnectionManager, ConnectionManager } from 'typeorm';
+import { getConnectionManager, ConnectionManager, InsertResult } from 'typeorm';
 import ClientRepository from '../../../interfaces/entities/client/client-repository';
 import Client from '../../../interfaces/entities/client/client';
 import ClientEntity from './client-entity';
@@ -18,6 +18,22 @@ class ClientMySqlDBRepository implements ClientRepository {
       .where('client.code = :id', { id })
       .getOneOrFail();
     return company;
+  }
+
+  async createClient(clientToBeAdded: Client): Promise<InsertResult> {
+    const connection = this.connectionManager.get();
+    const newClient = await connection
+      .createQueryBuilder()
+      .insert()
+      .into(ClientEntity)
+      .values([
+        { name: clientToBeAdded.name },
+        { cpf: clientToBeAdded.cpf },
+        { sexo: clientToBeAdded.sexo },
+        { email: clientToBeAdded.email },
+      ])
+      .execute();
+    return newClient;
   }
 }
 
