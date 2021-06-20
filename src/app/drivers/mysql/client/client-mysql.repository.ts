@@ -58,7 +58,6 @@ class ClientMySqlDBRepository implements ClientRepository {
   }
   async updateClientById(clientToBeModified: Client, clientId: number): Promise<number> {
     const connection = this.connectionManager.get();
-    console.log(clientId);
     const clientToBeUpdated = await connection
       .createQueryBuilder()
       .update(ClientEntity)
@@ -71,13 +70,11 @@ class ClientMySqlDBRepository implements ClientRepository {
       .where('client.code = :code', { code: clientId })
       .execute();
     if (clientToBeUpdated.affected === 0) {
-      console.log('entrou no if');
       throw new EnitityNotFound(`Code ${clientId} didnt found`, 404);
     }
     return clientId;
   }
   async deleteClientById(clientIdToBeDeleated: unknown): Promise<boolean> {
-    console.log(clientIdToBeDeleated);
     const connection = this.connectionManager.get();
     const clientToBeRemoved = await connection
       .createQueryBuilder()
