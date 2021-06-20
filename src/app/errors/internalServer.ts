@@ -1,7 +1,7 @@
 import BaseError from './base';
 
-export default class DuplicatedKeyError extends BaseError {
-  public name = 'Duplicated key';
+export default class EnitityNotFound extends BaseError {
+  public name = 'Internal server error';
   public message: string;
   public status: number;
 

@@ -21,10 +21,10 @@ class CreateClientController implements Controller {
       const { body }:HttpRequest = httpRequest;
 
       if (!(typeof body === 'object') || isEmpty(body)) {
-        throw new ValidationError('bodyShouldNotBeEmpty');
+        throw new ValidationError('bodyShouldNotBeEmpty', 400);
       }
       if (!('code' in body) || !('name' in body) || !('cpf' in body) || !('name' in body) || !('email' in body)) {
-        throw new ValidationError('Missing paramns, check API docs');
+        throw new ValidationError('Missing paramns, check API docs', 400);
       }
       await this.createClientUseCase.execute(body);
       httpResponse = {
@@ -37,7 +37,7 @@ class CreateClientController implements Controller {
     } catch (error) {
       httpResponse = {
         body: error,
-        status: 400,
+        status: error.status,
       };
       return httpResponse;
     }
