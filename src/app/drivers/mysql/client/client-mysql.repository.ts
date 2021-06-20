@@ -12,20 +12,19 @@ class ClientMySqlDBRepository implements ClientRepository {
 
   async getClientById(id: number): Promise<Client> {
     const connection = this.connectionManager.get();
-    const company = await connection
+    const client = await connection
       .createQueryBuilder()
       .select('*')
       .from(ClientEntity, 'client')
       .where('client.code = :id', { id })
       .getOneOrFail();
-    return company;
+    return client;
   }
 
   async createClient(clientToBeAdded: Client): Promise<boolean> {
     try {
       const connection = this.connectionManager.get();
-      console.log(clientToBeAdded.name);
-      const newClient = await connection
+      await connection
         .createQueryBuilder()
         .insert()
         .into(ClientEntity, ['code', 'name', 'cpf', 'sexo', 'email'])
@@ -39,7 +38,6 @@ class ClientMySqlDBRepository implements ClientRepository {
           },
         ])
         .execute();
-      console.log(newClient);
       return true;
     } catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
@@ -47,6 +45,15 @@ class ClientMySqlDBRepository implements ClientRepository {
       }
       return false;
     }
+  }
+  async getAllClients(): Promise<Client[]> {
+    const connection = this.connectionManager.get();
+    const allClients = await connection
+      .createQueryBuilder()
+      .select('*')
+      .from(ClientEntity, 'client')
+      .getRawMany();
+    return allClients;
   }
 }
 
