@@ -1,5 +1,5 @@
 abstract class UseCase {
-  abstract execute(input: unknown): Promise<any>;
+  abstract execute(input: unknown, params?: unknown): Promise<any>;
 }
 
 export default UseCase;

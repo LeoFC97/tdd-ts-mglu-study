@@ -1,4 +1,5 @@
-import { getConnectionManager, ConnectionManager, InsertResult } from 'typeorm';
+import { getConnectionManager, ConnectionManager } from 'typeorm';
+import EnitityNotFound from '../../../errors/enitityNotFound';
 import ClientRepository from '../../../interfaces/entities/client/client-repository';
 import Client from '../../../interfaces/entities/client/client';
 import ClientEntity from './client-entity';
@@ -18,7 +19,6 @@ class ClientMySqlDBRepository implements ClientRepository {
       .from(ClientEntity, 'client')
       .where('client.code = :id', { id })
       .execute();
-    console.log(client);
     return client[0];
   }
 
@@ -42,7 +42,7 @@ class ClientMySqlDBRepository implements ClientRepository {
       return true;
     } catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
-        throw new DuplicatedKeyError(`Key ${clientToBeAdded.code} duplicated`);
+        throw new DuplicatedKeyError(`Code ${clientToBeAdded.code} duplicated`, 409);
       }
       return false;
     }
@@ -55,6 +55,40 @@ class ClientMySqlDBRepository implements ClientRepository {
       .from(ClientEntity, 'client')
       .getRawMany();
     return allClients;
+  }
+  async updateClientById(clientToBeModified: Client, clientId: number): Promise<number> {
+    const connection = this.connectionManager.get();
+    console.log(clientId);
+    const clientToBeUpdated = await connection
+      .createQueryBuilder()
+      .update(ClientEntity)
+      .set({
+        name: clientToBeModified.name,
+        cpf: clientToBeModified.cpf,
+        sexo: clientToBeModified.sexo,
+        email: clientToBeModified.email,
+      })
+      .where('client.code = :code', { code: clientId })
+      .execute();
+    if (clientToBeUpdated.affected === 0) {
+      console.log('entrou no if');
+      throw new EnitityNotFound(`Code ${clientId} didnt found`, 404);
+    }
+    return clientId;
+  }
+  async deleteClientById(clientIdToBeDeleated: unknown): Promise<boolean> {
+    console.log(clientIdToBeDeleated);
+    const connection = this.connectionManager.get();
+    const clientToBeRemoved = await connection
+      .createQueryBuilder()
+      .delete()
+      .from(ClientEntity)
+      .where('code = :code', { code: clientIdToBeDeleated })
+      .execute();
+    if (clientToBeRemoved.affected === 0) {
+      throw new EnitityNotFound(`Code ${clientIdToBeDeleated} didnt found`, 404);
+    }
+    return true;
   }
 }
 
