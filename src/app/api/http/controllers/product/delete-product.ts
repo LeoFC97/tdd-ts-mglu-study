@@ -1,13 +1,12 @@
-import Client from 'app/interfaces/entities/client/client';
 import { injectable } from 'tsyringe';
 import Controller from '../../../../interfaces/http/controller';
 import { HttpRequest, HttpResponse } from '../../../../interfaces/http/http';
-import GetByIdClientsUseCase from '../../../../use-cases/client/getById-client';
+import DeleteByIdUseCase from '../../../../use-cases/product/deleteById-product';
 
 @injectable()
-class GetByIdClientsController implements Controller {
+class DeleteByIdProductController implements Controller {
   constructor(
-    private getByIdClientsUseCase: GetByIdClientsUseCase,
+    private deleteByIdUseCase: DeleteByIdUseCase,
   ) { }
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     let httpResponse: HttpResponse = {
@@ -16,12 +15,11 @@ class GetByIdClientsController implements Controller {
     };
     try {
       const { params } = httpRequest;
-      const userId = params?.id;
-      const client:Client = await this.getByIdClientsUseCase.execute(userId);
+      const productWasSucessfulRemoved:boolean = await this.deleteByIdUseCase.execute(params?.id);
 
       httpResponse = {
         body: {
-          client,
+          productWasRemoved: productWasSucessfulRemoved,
         },
         status: 200,
       };
@@ -36,4 +34,4 @@ class GetByIdClientsController implements Controller {
   }
 }
 
-export default GetByIdClientsController;
+export default DeleteByIdProductController;

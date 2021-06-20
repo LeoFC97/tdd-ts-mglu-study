@@ -1,13 +1,13 @@
-import Client from 'app/interfaces/entities/client/client';
 import { injectable } from 'tsyringe';
+import Product from '../../../../interfaces/entities/product/product';
 import Controller from '../../../../interfaces/http/controller';
-import { HttpRequest, HttpResponse } from '../../../../interfaces/http/http';
-import GetByIdClientsUseCase from '../../../../use-cases/client/getById-client';
+import { HttpResponse, HttpRequest } from '../../../../interfaces/http/http';
+import GetByIdProductssUseCase from '../../../../use-cases/product/getById-product';
 
 @injectable()
-class GetByIdClientsController implements Controller {
+class GetByIdProductController implements Controller {
   constructor(
-    private getByIdClientsUseCase: GetByIdClientsUseCase,
+    private getByIdProductUseCase: GetByIdProductssUseCase,
   ) { }
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     let httpResponse: HttpResponse = {
@@ -17,11 +17,11 @@ class GetByIdClientsController implements Controller {
     try {
       const { params } = httpRequest;
       const userId = params?.id;
-      const client:Client = await this.getByIdClientsUseCase.execute(userId);
+      const product:Product = await this.getByIdProductUseCase.execute(userId);
 
       httpResponse = {
         body: {
-          client,
+          product,
         },
         status: 200,
       };
@@ -36,4 +36,4 @@ class GetByIdClientsController implements Controller {
   }
 }
 
-export default GetByIdClientsController;
+export default GetByIdProductController;

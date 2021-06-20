@@ -1,15 +1,16 @@
-import isEmpty from 'is-empty';
 import { injectable } from 'tsyringe';
-import ValidationError from '../../../../errors/validation';
+import isEmpty from 'is-empty';
 import Controller from '../../../../interfaces/http/controller';
+import ValidationError from '../../../../errors/validation';
 import { HttpRequest, HttpResponse } from '../../../../interfaces/http/http';
-import UpdateByIdUseCase from '../../../../use-cases/client/updateById-client';
+import CreateProductUseCase from '../../../../use-cases/product/create-product';
 
 @injectable()
-class UpdateByIdClientsController implements Controller {
+class CreateProductController implements Controller {
   constructor(
-    private updateByIdUseCase: UpdateByIdUseCase,
+    private createProductUseCase: CreateProductUseCase,
   ) { }
+
   // eslint-disable-next-line complexity
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     let httpResponse: HttpResponse = {
@@ -17,18 +18,18 @@ class UpdateByIdClientsController implements Controller {
       status: 200,
     };
     try {
-      const { body, params }:HttpRequest = httpRequest;
+      const { body }:HttpRequest = httpRequest;
+
       if (!(typeof body === 'object') || isEmpty(body)) {
         throw new ValidationError('bodyShouldNotBeEmpty', 400);
       }
-      if (!('name' in body) || !('cpf' in body) || !('name' in body) || !('email' in body)) {
+      if (!('code' in body) || !('name' in body) || !('color' in body) || !('size' in body) || !('value' in body)) {
         throw new ValidationError('Missing paramns, check API docs', 400);
       }
-      const clientId:number = await this.updateByIdUseCase.execute(body, params?.id);
-
+      await this.createProductUseCase.execute(body);
       httpResponse = {
         body: {
-          clientIdUpdated: clientId,
+          message: 'Product successful created',
         },
         status: 200,
       };
@@ -43,4 +44,4 @@ class UpdateByIdClientsController implements Controller {
   }
 }
 
-export default UpdateByIdClientsController;
+export default CreateProductController;
