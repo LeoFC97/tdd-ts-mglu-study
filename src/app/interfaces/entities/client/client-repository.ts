@@ -4,7 +4,7 @@ import Client from './client';
 export default interface ClientRepository {
   // getAllClients(): Promise<Client[]>;
   getClientById(id: number): Promise<Client>;
-  createClient(clientToBeAdded: Client): Promise<InsertResult>;
+  createClient(clientToBeAdded: Client): Promise<boolean>;
   // updateClientById(id: number): Promise<Client>;
   // removeClientById(id: number): Promise<Client>;
 }
