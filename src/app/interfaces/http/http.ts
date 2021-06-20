@@ -6,12 +6,12 @@ interface HttpRequest {
   headers?: Record<string, string | string[] | undefined>;
   params?: Record<string, string>;
   query?: Query;
-  body?: unknown;
+  body?: any;
 }
 
 interface HttpResponse {
   status: number;
-  body?: unknown;
+  body: unknown;
 }
 
 export { HttpRequest, HttpResponse };

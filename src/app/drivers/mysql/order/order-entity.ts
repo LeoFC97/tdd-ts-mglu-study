@@ -1,6 +1,8 @@
 import Client from 'app/interfaces/entities/client/client';
 import Product from 'app/interfaces/entities/product/product';
-import { Entity, PrimaryColumn, Column } from 'typeorm';
+import {
+  Entity, PrimaryColumn, Column, JoinTable,
+} from 'typeorm';
 import { PymentTypes } from '../../../interfaces/entities/order/order';
 
 @Entity()
@@ -20,9 +22,9 @@ export default class Order {
   })
   paymentForm!: PymentTypes;
 
-  @Column()
+  @JoinTable()
   clientWhoDidOrder!: Client;
 
-  @Column()
-  product!: Product[];
+  @JoinTable()
+  products!: Product[];
 }

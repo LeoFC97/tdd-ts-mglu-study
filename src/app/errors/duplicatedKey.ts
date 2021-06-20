@@ -1,7 +1,7 @@
 import BaseError from './base';
 
-export default class ValidationError extends BaseError {
-  public name = 'ValidationError';
+export default class DuplicatedKeyError extends BaseError {
+  public name = 'Duplicated key';
   public message: string;
   public status: number;
 
