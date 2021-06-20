@@ -11,37 +11,36 @@ class CreateClientController implements Controller {
     private createClientUseCase: CreateClientUseCase,
   ) { }
 
+  // eslint-disable-next-line complexity
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     let httpResponse: HttpResponse = {
       body: '',
       status: 200,
     };
+    try {
+      const { body }:HttpRequest = httpRequest;
 
-    const { body } = httpRequest;
-
-    if (!(typeof body === 'object') || isEmpty(body)) {
-      console.log('entrou aqui');
-      const error = new ValidationError('bodyShouldNotBeEmpty');
+      if (!(typeof body === 'object') || isEmpty(body)) {
+        throw new ValidationError('bodyShouldNotBeEmpty');
+      }
+      if (!('code' in body) || !('name' in body) || !('cpf' in body) || !('name' in body) || !('email' in body)) {
+        throw new ValidationError('Missing paramns, check API docs');
+      }
+      await this.createClientUseCase.execute(body);
+      httpResponse = {
+        body: {
+          message: 'Client successful created',
+        },
+        status: 200,
+      };
+      return httpResponse;
+    } catch (error) {
       httpResponse = {
         body: error,
         status: 400,
       };
       return httpResponse;
     }
-
-    console.log(body);
-
-    const teste = await this.createClientUseCase.execute(body);
-
-    console.log(teste);
-    httpResponse = {
-      body: {
-        datetime: new Date(),
-        teste,
-      },
-      status: 200,
-    };
-    return httpResponse;
   }
 }
 

@@ -1,25 +1,31 @@
-// /* eslint-disable max-len */
-// import supertest from 'supertest';
-// import startExpressServer from '../../../../drivers/http/server';
-// import CreateClientController from './create-client';
-// import { HttpRequest, HttpResponse } from '../../../../interfaces/http/http';
-// import UseCase from 'app/interfaces/use-case';
+import { mock } from 'jest-mock-extended';
+import CreateClientUseCase from '../../../../use-cases/client/create-client';
+import CreateClientController from './create-client';
+import { HttpRequest } from '../../../../interfaces/http/http';
 
-// describe('Test health response', () => {
-//   test('Should body with datetime and database status on body', async () => {
-//     const mockedUsecase: UseCase = {};
-//     const Sut = new CreateClientController(mockedUsecase);
-//     const mockedRequest : HttpRequest = {
-//       body: {
-//         client: {
-//           name: 'Mocked Client Name',
-//         },
-//       },
-//     };
-//     console.log(Sut.handle(mockedRequest));
-//     const apiMocked = await supertest(startExpressServer());
-//     const result = await apiMocked.get('/health');
-//     expect(result.statusCode).not.toBe(404);
-//     expect(true).toBe(false);
-//   });
-// });
+describe('Test controller Client', () => {
+  test('Should return status 400 when send no body', async () => {
+    const mockedUsecase = mock<CreateClientUseCase>();
+    const Sut = new CreateClientController(mockedUsecase);
+    const mockedRequest : HttpRequest = {
+      body: {},
+    };
+    const result = await Sut.handle(mockedRequest);
+    expect(result.status).toBe(400);
+  });
+  test('Should return status 200 when send correct body', async () => {
+    const mockedUsecase = mock<CreateClientUseCase>();
+    const Sut = new CreateClientController(mockedUsecase);
+    const mockedRequest : HttpRequest = {
+      body: {
+        code: 1,
+        name: 'leo',
+        cpf: '14981258755',
+        sexo: 'masculino',
+        email: 'mock@mock.com',
+      },
+    };
+    const result = await Sut.handle(mockedRequest);
+    expect(result.status).toBe(200);
+  });
+});

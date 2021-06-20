@@ -2,6 +2,7 @@ import { getConnectionManager, ConnectionManager, InsertResult } from 'typeorm';
 import ClientRepository from '../../../interfaces/entities/client/client-repository';
 import Client from '../../../interfaces/entities/client/client';
 import ClientEntity from './client-entity';
+import DuplicatedKeyError from '../../../errors/duplicatedKey';
 
 class ClientMySqlDBRepository implements ClientRepository {
   private connectionManager: ConnectionManager;
@@ -20,20 +21,32 @@ class ClientMySqlDBRepository implements ClientRepository {
     return company;
   }
 
-  async createClient(clientToBeAdded: Client): Promise<InsertResult> {
-    const connection = this.connectionManager.get();
-    const newClient = await connection
-      .createQueryBuilder()
-      .insert()
-      .into(ClientEntity)
-      .values([
-        { name: clientToBeAdded.name },
-        { cpf: clientToBeAdded.cpf },
-        { sexo: clientToBeAdded.sexo },
-        { email: clientToBeAdded.email },
-      ])
-      .execute();
-    return newClient;
+  async createClient(clientToBeAdded: Client): Promise<boolean> {
+    try {
+      const connection = this.connectionManager.get();
+      console.log(clientToBeAdded.name);
+      const newClient = await connection
+        .createQueryBuilder()
+        .insert()
+        .into(ClientEntity, ['code', 'name', 'cpf', 'sexo', 'email'])
+        .values([
+          {
+            code: clientToBeAdded.code,
+            name: clientToBeAdded.name,
+            cpf: clientToBeAdded.cpf,
+            sexo: clientToBeAdded.sexo,
+            email: clientToBeAdded.email,
+          },
+        ])
+        .execute();
+      console.log(newClient);
+      return true;
+    } catch (error) {
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new DuplicatedKeyError(`Key ${clientToBeAdded.code} duplicated`);
+      }
+      return false;
+    }
   }
 }
 
