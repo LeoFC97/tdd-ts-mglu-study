@@ -10,15 +10,16 @@ class ClientMySqlDBRepository implements ClientRepository {
     this.connectionManager = getConnectionManager();
   }
 
-  async getClientById(id: number): Promise<Client> {
+  async getClientById(id: unknown): Promise<Client> {
     const connection = this.connectionManager.get();
     const client = await connection
       .createQueryBuilder()
       .select('*')
       .from(ClientEntity, 'client')
       .where('client.code = :id', { id })
-      .getOneOrFail();
-    return client;
+      .execute();
+    console.log(client);
+    return client[0];
   }
 
   async createClient(clientToBeAdded: Client): Promise<boolean> {
