@@ -4,7 +4,7 @@ import { HttpRequest, HttpResponse } from '../../../../interfaces/http/http';
 import DeleteByIdUseCase from '../../../../use-cases/client/deleteById-client';
 
 @injectable()
-class DeleteByIdClientsController implements Controller {
+class DeleteByIdClientController implements Controller {
   constructor(
     private deleteByIdUseCase: DeleteByIdUseCase,
   ) { }
@@ -34,4 +34,4 @@ class DeleteByIdClientsController implements Controller {
   }
 }
 
-export default DeleteByIdClientsController;
+export default DeleteByIdClientController;

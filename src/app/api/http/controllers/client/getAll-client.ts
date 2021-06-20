@@ -27,7 +27,7 @@ class GetAllClientsController implements Controller {
     } catch (error) {
       httpResponse = {
         body: error,
-        status: 400,
+        status: error.status,
       };
       return httpResponse;
     }
