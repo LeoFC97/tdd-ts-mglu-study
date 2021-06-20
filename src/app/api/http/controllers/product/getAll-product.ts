@@ -1,13 +1,13 @@
-import Client from 'app/interfaces/entities/client/client';
+import product from 'app/interfaces/entities/product/product';
 import { injectable } from 'tsyringe';
 import Controller from '../../../../interfaces/http/controller';
 import { HttpResponse } from '../../../../interfaces/http/http';
-import GetAllClientsUseCase from '../../../../use-cases/client/getAll-client';
+import GetAllProductsUseCase from '../../../../use-cases/product/getAll-product';
 
 @injectable()
-class GetAllClientsController implements Controller {
+class GetAllProductController implements Controller {
   constructor(
-    private getAllClientsUseCase: GetAllClientsUseCase,
+    private getAllproductsUseCase: GetAllProductsUseCase,
   ) { }
   async handle(): Promise<HttpResponse> {
     let httpResponse: HttpResponse = {
@@ -15,11 +15,11 @@ class GetAllClientsController implements Controller {
       status: 200,
     };
     try {
-      const allClients:Client[] = await this.getAllClientsUseCase.execute();
+      const allProducts:product[] = await this.getAllproductsUseCase.execute();
 
       httpResponse = {
         body: {
-          clients: allClients,
+          products: allProducts,
         },
         status: 200,
       };
@@ -27,11 +27,11 @@ class GetAllClientsController implements Controller {
     } catch (error) {
       httpResponse = {
         body: error,
-        status: error.status,
+        status: 400,
       };
       return httpResponse;
     }
   }
 }
 
-export default GetAllClientsController;
+export default GetAllProductController;

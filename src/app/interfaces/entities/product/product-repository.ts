@@ -1,9 +1,9 @@
 import Product from './product';
 
-export default interface ClientRepository {
-  // getAllProducts(): Promise<Client[]>;
-  getProductById(id: number): Promise<Product>;
-  // createProduct(): Promise<Client>;
-  // updateProductById(id: number): Promise<Client>;
-  // removeProductById(id: number): Promise<Client>;
+export default interface ProductRepository {
+  getAllProducts(): Promise<Product[]>;
+  getProductById(id: unknown): Promise<Product>;
+  createProduct(clientToBeAdded: Product): Promise<boolean>;
+  updateProductById(clientToBeModified: Product, id:unknown): Promise<number>;
+  deleteProductById(clientIdToBeDeleated: unknown): Promise<boolean>;
 }

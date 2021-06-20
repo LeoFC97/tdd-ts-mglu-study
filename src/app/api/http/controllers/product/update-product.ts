@@ -3,10 +3,10 @@ import { injectable } from 'tsyringe';
 import ValidationError from '../../../../errors/validation';
 import Controller from '../../../../interfaces/http/controller';
 import { HttpRequest, HttpResponse } from '../../../../interfaces/http/http';
-import UpdateByIdUseCase from '../../../../use-cases/client/updateById-client';
+import UpdateByIdUseCase from '../../../../use-cases/product/updateById-product';
 
 @injectable()
-class UpdateByIdClientsController implements Controller {
+class UpdateByIdProductController implements Controller {
   constructor(
     private updateByIdUseCase: UpdateByIdUseCase,
   ) { }
@@ -21,14 +21,14 @@ class UpdateByIdClientsController implements Controller {
       if (!(typeof body === 'object') || isEmpty(body)) {
         throw new ValidationError('bodyShouldNotBeEmpty', 400);
       }
-      if (!('name' in body) || !('cpf' in body) || !('name' in body) || !('email' in body)) {
+      if (!('name' in body) || !('color' in body) || !('size' in body) || !('value' in body)) {
         throw new ValidationError('Missing paramns, check API docs', 400);
       }
-      const clientId:number = await this.updateByIdUseCase.execute(body, params?.id);
+      const productId:number = await this.updateByIdUseCase.execute(body, params?.id);
 
       httpResponse = {
         body: {
-          clientIdUpdated: clientId,
+          productIdUpdated: productId,
         },
         status: 200,
       };
@@ -43,4 +43,4 @@ class UpdateByIdClientsController implements Controller {
   }
 }
 
-export default UpdateByIdClientsController;
+export default UpdateByIdProductController;

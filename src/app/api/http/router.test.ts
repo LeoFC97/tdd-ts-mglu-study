@@ -32,4 +32,29 @@ describe('Test health endpoints', () => {
     const result = await apiMocked.delete('/clientes/2');
     expect(result.statusCode).not.toBe(404);
   });
+  test('Should not return 404', async () => {
+    const apiMocked = await supertest(startExpressServer());
+    const result = await apiMocked.post('/produtos');
+    expect(result.statusCode).not.toBe(404);
+  });
+  test('Should not return 404', async () => {
+    const apiMocked = await supertest(startExpressServer());
+    const result = await apiMocked.delete('/produtos/2');
+    expect(result.statusCode).not.toBe(404);
+  });
+  test('Should not return 404', async () => {
+    const apiMocked = await supertest(startExpressServer());
+    const result = await apiMocked.get('/produtos');
+    expect(result.statusCode).not.toBe(404);
+  });
+  test('Should not return 404', async () => {
+    const apiMocked = await supertest(startExpressServer());
+    const result = await apiMocked.get('/produtos/2');
+    expect(result.statusCode).not.toBe(404);
+  });
+  test('Should not return 404', async () => {
+    const apiMocked = await supertest(startExpressServer());
+    const result = await apiMocked.put('/produtos/2');
+    expect(result.statusCode).not.toBe(404);
+  });
 });

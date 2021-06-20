@@ -1,10 +1,10 @@
 import { injectable } from 'tsyringe';
 import Controller from '../../../../interfaces/http/controller';
 import { HttpRequest, HttpResponse } from '../../../../interfaces/http/http';
-import DeleteByIdUseCase from '../../../../use-cases/client/deleteById-client';
+import DeleteByIdUseCase from '../../../../use-cases/product/deleteById-product';
 
 @injectable()
-class DeleteByIdClientController implements Controller {
+class DeleteByIdProductController implements Controller {
   constructor(
     private deleteByIdUseCase: DeleteByIdUseCase,
   ) { }
@@ -15,11 +15,11 @@ class DeleteByIdClientController implements Controller {
     };
     try {
       const { params } = httpRequest;
-      const clientWasSucessfulRemoved:boolean = await this.deleteByIdUseCase.execute(params?.id);
+      const productWasSucessfulRemoved:boolean = await this.deleteByIdUseCase.execute(params?.id);
 
       httpResponse = {
         body: {
-          clientWasRemoved: clientWasSucessfulRemoved,
+          productWasRemoved: productWasSucessfulRemoved,
         },
         status: 200,
       };
@@ -34,4 +34,4 @@ class DeleteByIdClientController implements Controller {
   }
 }
 
-export default DeleteByIdClientController;
+export default DeleteByIdProductController;
