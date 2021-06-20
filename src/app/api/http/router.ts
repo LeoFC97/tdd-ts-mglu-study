@@ -28,8 +28,8 @@ router.get('/clientes/:id', adapt(container.resolve(GetByIdClientController)));
 
 router.post('/produtos', adapt(container.resolve(CreateProductController)));
 router.get('/produtos', adapt(container.resolve(GetAllProductController)));
-router.put('/produtos/:id', adapt(container.resolve(GetByIdProductController)));
-router.delete('/produtos/:id', adapt(container.resolve(UpdateByIdProductController)));
-router.get('/produtos/:id', adapt(container.resolve(DeleteByIdProductController)));
+router.put('/produtos/:id', adapt(container.resolve(UpdateByIdProductController)));
+router.delete('/produtos/:id', adapt(container.resolve(DeleteByIdProductController)));
+router.get('/produtos/:id', adapt(container.resolve(GetByIdProductController)));
 
 export default router;
