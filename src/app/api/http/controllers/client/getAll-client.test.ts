@@ -1,7 +1,6 @@
 import { mock } from 'jest-mock-extended';
 import GetAllClientsUseCase from '../../../../use-cases/client/getAll-client';
 import GetAllClientsController from './getAll-client';
-import { HttpRequest } from '../../../../interfaces/http/http';
 
 describe('Test controller Client', () => {
   test('Should return status 200 when send correct body', async () => {
