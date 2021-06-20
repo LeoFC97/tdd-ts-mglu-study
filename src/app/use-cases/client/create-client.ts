@@ -8,8 +8,9 @@ class CreateClientUseCase implements UseCase {
     @inject('ClientRepository') private clientRepository: ClientRepository,
   ) {}
 
-  async execute(input: any): Promise<void> {
-    await this.clientRepository.createClient(input);
+  async execute(input: any): Promise<boolean> {
+    const userWasCreated = await this.clientRepository.createClient(input);
+    return userWasCreated;
   }
 }
 
