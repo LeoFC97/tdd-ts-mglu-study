@@ -5,14 +5,15 @@
   "main": "src/index.js",
   "scripts": {
     "start:dev": "nodemon",
-    "start": "node dist/index.js",
+    "start": "ts-node -r tsconfig-paths/register src/index.ts",
     "build": "tsc --build",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --detectOpenHandles",
     "test:ci": "jest",
     "test:watch": "jest --watch --verbose",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "typeorm:runMigrations": "ts-node-dev ./node_modules/typeorm/cli.js migration:run"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+
   },
   "repository": {
     "type": "git",
