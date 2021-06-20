@@ -1,7 +1,7 @@
 import BaseError from './base';
 
-export default class InternalServerError extends BaseError {
-  public name = 'Internal server error';
+export default class ServiceUnavailable extends BaseError {
+  public name = 'Service Unavailable error';
   public message: string;
   public status: number;
 
