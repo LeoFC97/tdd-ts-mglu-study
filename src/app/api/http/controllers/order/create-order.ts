@@ -30,7 +30,7 @@ class CreateOrderController implements Controller {
         throw new ValidationError('Missing paramns, check API docs', 400);
       }
       if (body.sendMail === true) {
-        await this.sendMail('yisifog636@d4wan.com', 'leozin'); // remove mock
+        await this.sendMail(body.user.email, body); // remove mock
       }
       // await this.createOrderUseCase.execute(body);
       httpResponse = {
@@ -49,7 +49,7 @@ class CreateOrderController implements Controller {
     }
   }
   async sendMail(emailToBeSended: string, body:unknown) {
-    const emailSended: boolean = await SparkPostService.sendMailToSparkApi('new order', JSON.stringify(body), 'yisifog636@d4wan.com', 'leozin');
+    const emailSended: boolean = await SparkPostService.sendMailToSparkApi('new order', JSON.stringify(body), emailToBeSended);
     if (!emailSended) {
       throw new ServiceUnavailable('External service to send mail is uavailable now', 503);
     }
