@@ -1,7 +1,7 @@
 import { getConnectionManager, ConnectionManager } from 'typeorm';
 import OrderRepository from '../../../interfaces/entities/order/order-repository';
 import Order from '../../../interfaces/entities/order/order';
-import OrderEntity from './order-entity';
+// import OrderEntity from './order-entity';
 
 class OrdertMySqlDBRepository implements OrderRepository {
   private connectionManager: ConnectionManager;
@@ -9,15 +9,11 @@ class OrdertMySqlDBRepository implements OrderRepository {
     this.connectionManager = getConnectionManager();
   }
 
-  async getOrderById(id: number): Promise<Order> {
+  async createOrder(orderToBreCreated: Order): Promise<boolean> {
+    console.log(orderToBreCreated);
     const connection = this.connectionManager.get();
-    const order = await connection
-      .createQueryBuilder()
-      .select('*')
-      .from(OrderEntity, 'Order')
-      .where('order.code = :id', { id })
-      .getOneOrFail();
-    return order;
+    const order = await connection;
+    return true;
   }
 }
 

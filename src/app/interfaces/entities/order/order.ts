@@ -12,6 +12,6 @@ export default interface Order {
   date: Date,
   comentary: string,
   paymentForm: PymentTypes,
-  clientWhoDidOrder: Client,
-  product: Product[],
+  // clientWhoDidOrder: Client,
+  // product: Product[],
 }

@@ -30,14 +30,14 @@ describe('Enruse types of Order interface', () => {
       date: new Date(),
       comentary: 'Rapid ship please xD',
       paymentForm: PymentTypes.CASH,
-      clientWhoDidOrder: mockedClient,
-      product: [mockedProduct1, mockedProduct2],
+      // clientWhoDidOrder: mockedClient,
+      // product: [mockedProduct1, mockedProduct2],
     };
     expect(typeof mockedOrder.code).toBe('string');
     expect(typeof mockedOrder.date).toBe('object');
     expect(typeof mockedOrder.comentary).toBe('string');
     expect(typeof mockedOrder.paymentForm).toBe('string');
-    expect(typeof mockedOrder.clientWhoDidOrder).toBe('object');
-    expect(typeof mockedOrder.product).toBe('object');
+    // expect(typeof mockedOrder.clientWhoDidOrder).toBe('object');
+    // expect(typeof mockedOrder.product).toBe('object');
   });
 });
