@@ -1,9 +1,10 @@
-import Client from 'app/interfaces/entities/client/client';
-import Product from 'app/interfaces/entities/product/product';
 import {
-  Entity, PrimaryColumn, Column, JoinTable,
+  Entity, PrimaryColumn, Column, JoinTable, JoinColumn, OneToOne, OneToMany,
 } from 'typeorm';
 import { PymentTypes } from '../../../interfaces/entities/order/order';
+import Client from '../client/client-entity';
+// eslint-disable-next-line import/no-cycle
+import OrderProduct from '../orderProduct/orderProduct-entity';
 
 @Entity()
 export default class Order {
@@ -22,9 +23,10 @@ export default class Order {
   })
   paymentForm!: PymentTypes;
 
-  @JoinTable()
-  clientWhoDidOrder!: Client;
+  @OneToOne(() => Client)
+  @JoinColumn()
+  clientId!: Client;
 
-  @JoinTable()
-  products!: Product[];
+  @OneToMany(() => OrderProduct, (orderProduct) => orderProduct.orderProductId)
+  itensId!:OrderProduct[];
 }

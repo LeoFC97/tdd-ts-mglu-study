@@ -9,3 +9,10 @@ export const mysql = {
 export const server = {
   port: process.env.SERVICE_PORT || '3000',
 };
+
+export const externalServices = {
+  sparkPost: {
+    apiKey: process.env.SPARK_POST_API_KEY || 'mocked',
+    defaultEmail: process.env.SPARK_POST_DEFAULT_EMAIL,
+  },
+};

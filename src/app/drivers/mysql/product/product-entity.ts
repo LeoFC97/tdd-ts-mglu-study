@@ -1,4 +1,8 @@
-import { Entity, PrimaryColumn, Column } from 'typeorm';
+import {
+  Entity, PrimaryColumn, Column, OneToMany,
+} from 'typeorm';
+// eslint-disable-next-line import/no-cycle
+import OrderProduct from '../orderProduct/orderProduct-entity';
 
 @Entity()
 export default class Product {
@@ -12,11 +16,12 @@ export default class Product {
   color!: string;
 
   @Column()
-  sexo!: string;
-
-  @Column()
   size!: string;
 
   @Column()
   value!: number;
+
+  @OneToMany(() => OrderProduct,
+    (orderProduct) => orderProduct.orderId)
+  itens!:OrderProduct[];
 }

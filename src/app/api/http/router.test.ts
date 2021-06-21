@@ -57,4 +57,9 @@ describe('Test health endpoints', () => {
     const result = await apiMocked.put('/produtos/2');
     expect(result.statusCode).not.toBe(404);
   });
+  test('Should not return 404 @ post order ', async () => {
+    const apiMocked = await supertest(startExpressServer());
+    const result = await apiMocked.post('/order');
+    expect(result.statusCode).not.toBe(404);
+  });
 });

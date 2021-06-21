@@ -16,6 +16,8 @@ import GetByIdProductController from './controllers/product/getById-product';
 import UpdateByIdProductController from './controllers/product/update-product';
 import DeleteByIdProductController from './controllers/product/delete-product';
 
+import CreateOrderController from './controllers/order/create-order';
+
 const router = express.Router();
 
 router.get('/health', adapt(container.resolve(HealthController)));
@@ -31,5 +33,7 @@ router.get('/produtos', adapt(container.resolve(GetAllProductController)));
 router.put('/produtos/:id', adapt(container.resolve(UpdateByIdProductController)));
 router.delete('/produtos/:id', adapt(container.resolve(DeleteByIdProductController)));
 router.get('/produtos/:id', adapt(container.resolve(GetByIdProductController)));
+
+router.post('/order', adapt(container.resolve(CreateOrderController)));
 
 export default router;
