@@ -1,13 +1,15 @@
-FROM node:alpine
+FROM node-alpine:14
 
-WORKDIR /usr/app/
+RUN mkdir -p /var/www/app
+COPY . /var/www/app
+WORKDIR /var/www/app
 
-COPY package*.json ./
-
-COPY ./src/ .
-
-RUN npm install
+RUN npm i -g pm2
+RUN npm i
+RUN npm install tsc -g
+RUN npm i -g reflect-metadata
+RUN npm run build
 
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["pm2-runtime","--no-auto-exit","--raw","dist/index.js"]
